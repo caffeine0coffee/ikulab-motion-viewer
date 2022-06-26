@@ -31,8 +31,6 @@
 #include "definition/vertex.hpp"
 #include "./animator.hpp"
 
-#define PADDING(pad) ImGui::SetCursorPosY(ImGui::GetCursorPosY() + (pad))
-
 VkResult CreateDebugUtilsMessengerEXT(
     VkInstance instance,
     const VkDebugUtilsMessengerCreateInfoEXT* pCreateinfo,
@@ -1435,75 +1433,26 @@ void Base::drawImGuiFrame() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    ImGuiIO& io = ImGui::GetIO();
-
-    // ImGui windows
-    // Indicator window
+    // Animation window ----------------------------
     if (!windowSizeInitialized) {
-        windowSizeInitialized = true;
-#ifndef NODEBUG
-        ImGui::SetNextWindowSize(ImVec2(300, 600));
-#else
-        ImGui::SetNextWindowSize(ImVec2(300, 250));
-#endif
+        ImGui::SetNextWindowSize(ImVec2(300, 200));
     }
-    ImGui::Begin("インジケーター");
-
-#ifndef NODEBUG
-    ImGui::Checkbox("ImGui DemoWindowを表示する", &showDemoWindow);
-    ImGui::Text("IsWindowFocused: %d", ImGui::IsWindowFocused());
-    PADDING(20);
-#endif
-
-    ImGui::Text("FPS: %.1f", io.Framerate);
-    ImGui::Text("Joints: %d", anim->getNumOfJoints());
-
-    auto total = anim->getNumOfFrames();
-    auto current = anim->getCurrentFrame();
-    ImGui::Text("Frame: %d / %d", current, total);
-
-    ImGui::ProgressBar((float)current / total, ImVec2(0.0, 0.0), "");
-    ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x + 5.0);
-    ImGui::Text("%.1f%%", (float)current / total * 100);
-
-    PADDING(30);
-
-#ifndef NODEBUG
-    // mouse input status
-    ImGui::Text("Cursor Pos: (%.1f, %.1f)", mouseCtx.currentX, mouseCtx.currentY);
-    ImGui::Text("Scroll offset: (%.1f, %.1f)", mouseCtx.scrollOffsetX, mouseCtx.scrollOffsetY);
-    ImGui::Text("DragStart: (%.1f, %.1f)", mouseCtx.dragStartX, mouseCtx.dragStartY);
-    ImGui::Text("DragEnd: (%.1f, %.1f)", mouseCtx.dragEndX, mouseCtx.dragEndY);
-    ImGui::Text("Delta: (%.1f, %.1f)", mouseCtx.deltaX, mouseCtx.deltaY);
-    ImGui::Text("Button L/R/M: (%d / %d / %d)", mouseCtx.leftButton, mouseCtx.rightButton, mouseCtx.middleButton);
-    ImGui::Text(
-        "Camera rotation (degrees) H/V: (%.2f, %.2f)",
-        glm::degrees(cameraCtx.hRotation),
-        glm::degrees(cameraCtx.vRotation)
-    );
-    ImGui::Text("Camera distance: %.2f", cameraCtx.distance);
-    glm::vec3 cameraPos = cameraCtx.generatePos();
-    ImGui::Text("Camera position: (%.2f, %.2f, %.2f)", cameraPos.x, cameraPos.y, cameraPos.z);
-    PADDING(20);
-
-    // window status
-    ImGui::Text("Window size: (%d, %d)", windowWidth, windowHeight);
-    PADDING(20);
-#endif
-
-    if (ImGui::Button("ファイルを開く...")) {
-        std::cout << "TODO: implement!!" << std::endl;
-    }
-    ImGui::Text("未実装です m(_ _)m");
-
+    ImGui::Begin("アニメーションコントローラー");
+    ImGui::Text("こんにちは。");
+    ImGui::Button("再生");
+    ImGui::Button("停止");
     ImGui::End();
 
-    // Demo window
+    // Demo window ----------------------------
     if (showDemoWindow) {
         ImGui::ShowDemoWindow();
     }
 
     ImGui::Render();
+
+    if (!windowSizeInitialized) {
+        windowSizeInitialized = true;
+    }
 }
 
 void Base::drawFrame() {
@@ -1876,45 +1825,6 @@ void Base::registerInputEvents() {
     glfwSetMouseButtonCallback(window, mouseButtonCallback);
     glfwSetScrollCallback(window, scrollCallback);
     glfwSetKeyCallback(window, keyCallback);
-}
-
-void Base::updateCamera() {
-    const static double DIFF_RATIO = 0.01;
-    const static double SCROLL_RATIO = 1.1;
-
-    bool isWindowFocused = ImGui::IsWindowFocused(ImGuiFocusedFlags_AnyWindow);
-
-    if (!isWindowFocused) {
-        if (mouseCtx.leftButton) {
-            double xDiff = mouseCtx.deltaX * DIFF_RATIO;
-            double yDiff = mouseCtx.deltaY * DIFF_RATIO;
-
-            if (keyCtx.shift) {
-                glm::mat4 r(1.0);
-                r *= glm::rotate(
-                    glm::mat4(1.0),
-                    cameraCtx.hRotation,
-                    glm::vec3(0.0, 0.0, 1.0)
-                );
-                r *= glm::rotate(
-                    glm::mat4(1.0),
-                    -cameraCtx.vRotation,
-                    glm::vec3(0.0, 1.0, 0.0)
-                );
-                glm::vec4 shift(0.0, -(float)xDiff, (float)yDiff, 1.0);
-                cameraCtx.center += glm::vec3(r * shift);
-            }
-            else {
-                cameraCtx.hRotation = std::fmod(cameraCtx.hRotation - xDiff, 2 * M_PI);
-                cameraCtx.vRotation = std::clamp(
-                    std::fmod(cameraCtx.vRotation + yDiff, 2 * M_PI),
-                    -M_PI / 2.0 + 0.0001,
-                    M_PI / 2.0 - 0.0001
-                );
-            }
-        }
-        cameraCtx.distance *= std::pow(SCROLL_RATIO, -mouseCtx.scrollOffsetY);
-    }
 }
 
 void Base::resetMouseInputContext() {

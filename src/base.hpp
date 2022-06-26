@@ -20,6 +20,8 @@
 #include "./definition/vertex.hpp"
 #include "./definition/common.hpp"
 #include "./definition/descriptor.hpp"
+#include "./context/camera.hpp"
+#include "./context/keyboard.hpp"
 #include "./animator.hpp"
 
 #ifdef NODEBUG
@@ -70,57 +72,6 @@ struct ModelMatUBO {
 struct SceneMatUBO {
 	alignas(16) glm::mat4 view;
 	alignas(16) glm::mat4 proj;
-};
-
-struct MouseInputContext {
-	bool leftButton = false;
-	bool rightButton = false;
-	bool middleButton = false;
-
-	double dragStartX = 0.0;
-	double dragStartY = 0.0;
-	double dragEndX = 0.0;
-	double dragEndY = 0.0;
-
-	double currentX = 0.0;
-	double currentY = 0.0;
-
-	double deltaX = 0.0;
-	double deltaY = 0.0;
-
-	double scrollOffsetX = 0.0;
-	double scrollOffsetY = 0.0;
-};
-
-struct KeyboardInputContext {
-	bool ctrl = false;
-	bool alt = false;
-	bool shift = false;
-};
-
-struct CameraContext {
-	glm::vec3 center{ 0.0, 0.0, 0.0 };
-	// in Radian
-	float hRotation = 0.0;
-	float vRotation = glm::radians(20.0);
-	float distance = 10.0;
-
-	glm::vec3 generatePos() {
-		glm::vec3 pos;
-		pos.x = distance * std::cos(hRotation) * std::cos(vRotation);
-		pos.y = distance * std::sin(hRotation) * std::cos(vRotation);
-		pos.z = distance * std::sin(vRotation);
-		pos += center;
-		return pos;
-	}
-
-	glm::mat4 generateViewMat() {
-		return glm::lookAt(
-			generatePos(),
-			center,
-			glm::vec3(0.0f, 0.0f, 1.0f)
-		);
-	}
 };
 
 class Base {
@@ -323,9 +274,6 @@ class Base {
 
 	std::shared_ptr<Animator> anim;
 
-	MouseInputContext mouseCtx;
-	KeyboardInputContext keyCtx;
-
 	// GLFW event callbacks ---
 	static void cursorPositionCallback(GLFWwindow* window, double xPos, double yPos);
 	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
@@ -333,8 +281,6 @@ class Base {
 	static void keyCallback(GLFWwindow* window, int key, int scanCode, int action, int mods);
 	void registerInputEvents();
 	// ---
-
-	CameraContext cameraCtx;
 
 public:
 	Base() {
