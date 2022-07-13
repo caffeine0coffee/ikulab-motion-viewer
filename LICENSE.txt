@@ -53,3 +53,9 @@ Shaderc
   Google
   Apache License Version 2.0 
     https://github.com/google/shaderc/blob/main/LICENSE
+
+easylogging++
+  Copyright (c) 2012-2018 Amrayn Web Services
+  Copyright (c) 2012-2018 @abumusamq
+  MIT License
+    https://github.com/amrayn/easyloggingpp/blob/master/LICENSE
