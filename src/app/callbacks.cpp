@@ -43,20 +43,5 @@ void App::keyCallback(GLFWwindow *window, int key, int scanCode, int action,
                       int mods) {
     App *app = static_cast<App *>(glfwGetWindowUserPointer(window));
 
-    switch (key) {
-    case GLFW_KEY_LEFT_CONTROL:
-    case GLFW_KEY_RIGHT_CONTROL:
-        app->keyboard->set_ctrl(action != GLFW_RELEASE);
-        break;
-    case GLFW_KEY_LEFT_ALT:
-    case GLFW_KEY_RIGHT_ALT:
-        app->keyboard->set_alt(action != GLFW_RELEASE);
-        break;
-    case GLFW_KEY_LEFT_SHIFT:
-    case GLFW_KEY_RIGHT_SHIFT:
-        app->keyboard->set_shift(action != GLFW_RELEASE);
-        break;
-    default:
-        break;
-    }
+    app->keyboard->UpdateFromKeyCallback(key, scanCode, action, mods);
 }
