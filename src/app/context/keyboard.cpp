@@ -20,15 +20,15 @@ void Keyboard::UpdateFromKeyCallback(const int key,
     switch (key) {
         case GLFW_KEY_LEFT_CONTROL:
         case GLFW_KEY_RIGHT_CONTROL:
-            set_ctrl(action != GLFW_RELEASE);
+            ctrl_ = action != GLFW_RELEASE;
             break;
         case GLFW_KEY_LEFT_ALT:
         case GLFW_KEY_RIGHT_ALT:
-            set_alt(action != GLFW_RELEASE);
+            alt_ = action != GLFW_RELEASE;
             break;
         case GLFW_KEY_LEFT_SHIFT:
         case GLFW_KEY_RIGHT_SHIFT:
-            set_shift(action != GLFW_RELEASE);
+            shift_ = action != GLFW_RELEASE;
             break;
         default:
             break;
