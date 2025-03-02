@@ -9,11 +9,6 @@ void Mouse::Reset() {
     delta_y_ = 0;
 }
 
-void Mouse::InitDragPosition() {
-    drag_start_x_ = current_x();
-    drag_start_y_ = current_y();
-}
-
 /**
  * @brief Update mouse state from GLFW CursorPositionCallback.
  *
@@ -75,4 +70,9 @@ void Mouse::UpdateFromScrollCallback(const double x_offset,
                                      const double y_offset) {
     scroll_offset_x_ = x_offset;
     scroll_offset_y_ = y_offset;
+}
+
+void Mouse::InitDragPosition() {
+    drag_start_x_ = current_x();
+    drag_start_y_ = current_y();
 }

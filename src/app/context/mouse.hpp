@@ -5,7 +5,6 @@
 class Mouse {
   public:
     void Reset();
-    void InitDragPosition();
 
     void UpdateFromCursorPositionCallback(double x_pos, double y_pos);
     void UpdateFromMouseButtonCallback(int button, int action, int mods);
@@ -28,6 +27,8 @@ class Mouse {
     [[nodiscard]] double scroll_offset_y() const { return scroll_offset_y_; }
 
   private:
+    void InitDragPosition();
+
     std::atomic<bool> left_button_ = false;
     std::atomic<bool> right_button_ = false;
     std::atomic<bool> middle_button_ = false;
