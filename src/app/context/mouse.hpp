@@ -5,8 +5,11 @@
 class Mouse {
   public:
     void Reset();
-
     void InitDragPosition();
+
+    void UpdateFromCursorPositionCallback(double x_pos, double y_pos);
+    void UpdateFromMouseButtonCallback(int button, int action, int mods);
+    void UpdateFromScrollCallback(double x_offset, double y_offset);
 
     [[nodiscard]] bool left_button() const { return left_button_; }
     [[nodiscard]] bool right_button() const { return right_button_; }
