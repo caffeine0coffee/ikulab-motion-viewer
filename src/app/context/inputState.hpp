@@ -1,0 +1,27 @@
+#pragma once
+
+#include <memory>
+
+#include "GLFW/glfw3.h"
+
+#include "keyboard.hpp"
+#include "mouse.hpp"
+
+class InputState {
+  public:
+    [[nodiscard]] const std::shared_ptr<Keyboard> keyboard() const;
+    [[nodiscard]] const std::shared_ptr<Keyboard> mouse() const;
+
+    static void cursorPositionCallback(GLFWwindow* window, double xPos,
+                                       double yPos);
+    static void mouseButtonCallback(GLFWwindow* window, int button, int action,
+                                    int mods);
+    static void scrollCallback(GLFWwindow* window, double xOffset,
+                               double yOffset);
+    static void keyCallback(GLFWwindow* window, int key, int scanCode,
+                            int action, int mods);
+
+  private:
+    std::shared_ptr<Keyboard> keyboard_;
+    std::shared_ptr<Mouse> mouse_;
+};

@@ -4,6 +4,7 @@
 
 #include <ikura/ikura.hpp>
 
+#include "context/inputState.hpp"
 #include "context/camera.hpp"
 #include "context/keyboard.hpp"
 #include "context/mouse.hpp"
@@ -35,6 +36,7 @@ class App {
     std::shared_ptr<Keyboard> keyboard;
     std::shared_ptr<Mouse> mouse;
     std::shared_ptr<UI> ui;
+    std::shared_ptr<InputState> input_state_;
 
     // Flags ----------
     bool modelLoaded = false;
