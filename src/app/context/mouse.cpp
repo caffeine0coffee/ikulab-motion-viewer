@@ -10,8 +10,8 @@ void Mouse::Reset() {
 }
 
 void Mouse::InitDragPosition() {
-    set_drag_start_x(current_x());
-    set_drag_start_y(current_y());
+    drag_start_x_ = current_x();
+    drag_start_y_ = current_y();
 }
 
 /**
@@ -24,10 +24,10 @@ void Mouse::InitDragPosition() {
  */
 void Mouse::UpdateFromCursorPositionCallback(const double x_pos,
                                              const double y_pos) {
-    set_delta_x(x_pos - current_x());
-    set_delta_y(y_pos - current_y());
-    set_current_x(x_pos);
-    set_current_y(y_pos);
+    delta_x_ = x_pos - current_x();
+    delta_y_ = y_pos - current_y();
+    current_x_ = x_pos;
+    current_y_ = y_pos;
 }
 
 // NOLINTBEGIN(*-easily-swappable-parameters)
@@ -44,13 +44,13 @@ void Mouse::UpdateFromMouseButtonCallback(const int button, const int action,
                                           [[maybe_unused]] const int mods) {
     switch (button) {
         case GLFW_MOUSE_BUTTON_LEFT:
-            set_left_button(action == GLFW_PRESS);
+            left_button_ = (action == GLFW_PRESS);
             break;
         case GLFW_MOUSE_BUTTON_RIGHT:
-            set_right_button(action == GLFW_PRESS);
+            right_button_ = (action == GLFW_PRESS);
             break;
         case GLFW_MOUSE_BUTTON_MIDDLE:
-            set_middle_button(action == GLFW_PRESS);
+            middle_button_ = (action == GLFW_PRESS);
             break;
         default:
             break;
@@ -73,6 +73,6 @@ void Mouse::UpdateFromMouseButtonCallback(const int button, const int action,
  */
 void Mouse::UpdateFromScrollCallback(const double x_offset,
                                      const double y_offset) {
-    set_scroll_offset_x(x_offset);
-    set_scroll_offset_y(y_offset);
+    scroll_offset_x_ = x_offset;
+    scroll_offset_y_ = y_offset;
 }

@@ -27,30 +27,6 @@ class Mouse {
     [[nodiscard]] double scroll_offset_x() const { return scroll_offset_x_; }
     [[nodiscard]] double scroll_offset_y() const { return scroll_offset_y_; }
 
-    void set_left_button(const bool left_button) { left_button_ = left_button; }
-    void set_right_button(const bool right_button) {
-        right_button_ = right_button;
-    }
-    void set_middle_button(const bool middle_button) {
-        middle_button_ = middle_button;
-    }
-    void set_drag_start_x(const double drag_start_x) {
-        drag_start_x_ = drag_start_x;
-    }
-    void set_drag_start_y(const double drag_start_y) {
-        drag_start_y_ = drag_start_y;
-    }
-    void set_current_x(const double current_x) { current_x_ = current_x; }
-    void set_current_y(const double current_y) { current_y_ = current_y; }
-    void set_delta_x(const double delta_x) { delta_x_ = delta_x; }
-    void set_delta_y(const double delta_y) { delta_y_ = delta_y; }
-    void set_scroll_offset_x(const double scroll_offset_x) {
-        scroll_offset_x_ = scroll_offset_x;
-    }
-    void set_scroll_offset_y(const double scroll_offset_y) {
-        scroll_offset_y_ = scroll_offset_y;
-    }
-
   private:
     std::atomic<bool> left_button_ = false;
     std::atomic<bool> right_button_ = false;
