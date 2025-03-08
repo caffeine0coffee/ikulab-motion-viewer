@@ -177,12 +177,12 @@ void App::initContexts() {
 }
 
 void App::setGlfwWindowEvents(GLFWwindow *window) {
-    glfwSetWindowUserPointer(window, this);
+    glfwSetWindowUserPointer(window, &input_state_);
 
-    glfwSetCursorPosCallback(window, cursorPositionCallback);
-    glfwSetMouseButtonCallback(window, mouseButtonCallback);
-    glfwSetScrollCallback(window, scrollCallback);
-    glfwSetKeyCallback(window, keyCallback);
+    glfwSetCursorPosCallback(window, input_state_->cursorPositionCallback);
+    glfwSetMouseButtonCallback(window, input_state_->mouseButtonCallback);
+    glfwSetScrollCallback(window, input_state_->scrollCallback);
+    glfwSetKeyCallback(window, input_state_->keyCallback);
 }
 
 void App::selectFileAndInitShapes() {
