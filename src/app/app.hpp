@@ -6,8 +6,6 @@
 
 #include "context/inputState.hpp"
 #include "context/camera.hpp"
-#include "context/keyboard.hpp"
-#include "context/mouse.hpp"
 #include "context/ui.hpp"
 #include "motionUtil/animator.hpp"
 
