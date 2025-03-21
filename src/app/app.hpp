@@ -33,8 +33,6 @@ class App {
 
     // Contexts ----------
     std::shared_ptr<Camera> camera;
-    std::shared_ptr<Keyboard> keyboard;
-    std::shared_ptr<Mouse> mouse;
     std::shared_ptr<UI> ui;
     std::shared_ptr<InputState> input_state_;
 

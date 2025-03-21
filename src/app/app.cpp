@@ -169,8 +169,6 @@ void App::setShapes(const char *filePath) {
 
 void App::initContexts() {
     camera = std::make_shared<Camera>();
-    keyboard = std::make_shared<Keyboard>();
-    mouse = std::make_shared<Mouse>();
     ui = std::make_shared<UI>();
 
     camera->ResetPosition();
