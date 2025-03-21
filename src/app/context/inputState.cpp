@@ -2,7 +2,7 @@
 // Created by caffeine on 25/03/02.
 //
 
-#include "InputState.hpp"
+#include "inputState.hpp"
 InputState::InputState()
     : keyboard_(std::make_shared<Keyboard>()),
       mouse_(std::make_shared<Mouse>()) {}
