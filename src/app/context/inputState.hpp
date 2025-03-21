@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <mutex>
 
 #include "GLFW/glfw3.h"
 
@@ -9,6 +10,10 @@
 
 class InputState {
   public:
+    InputState();
+
+    static std::shared_ptr<InputState> GetInstance();
+
     [[nodiscard]] const std::shared_ptr<Keyboard> keyboard() const;
     [[nodiscard]] const std::shared_ptr<Keyboard> mouse() const;
 

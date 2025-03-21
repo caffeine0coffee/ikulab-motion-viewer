@@ -177,8 +177,6 @@ void App::initContexts() {
 }
 
 void App::setGlfwWindowEvents(GLFWwindow *window) {
-    glfwSetWindowUserPointer(window, &input_state_);
-
     glfwSetCursorPosCallback(window, input_state_->cursorPositionCallback);
     glfwSetMouseButtonCallback(window, input_state_->mouseButtonCallback);
     glfwSetScrollCallback(window, input_state_->scrollCallback);
