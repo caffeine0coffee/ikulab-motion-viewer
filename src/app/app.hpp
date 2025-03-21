@@ -4,9 +4,8 @@
 
 #include <ikura/ikura.hpp>
 
+#include "context/inputState.hpp"
 #include "context/camera.hpp"
-#include "context/keyboard.hpp"
-#include "context/mouse.hpp"
 #include "context/ui.hpp"
 #include "motionUtil/animator.hpp"
 
@@ -32,9 +31,8 @@ class App {
 
     // Contexts ----------
     std::shared_ptr<Camera> camera;
-    std::shared_ptr<Keyboard> keyboard;
-    std::shared_ptr<Mouse> mouse;
     std::shared_ptr<UI> ui;
+    std::shared_ptr<InputState> input_state_;
 
     // Flags ----------
     bool modelLoaded = false;
@@ -61,16 +59,6 @@ class App {
     void updateMainMenu();
     void updateAnimationControlWindow();
     void updateDebugWindow();
-
-    // Glfw Callbacks ----------
-    static void cursorPositionCallback(GLFWwindow *window, double xPos,
-                                       double yPos);
-    static void mouseButtonCallback(GLFWwindow *window, int button, int action,
-                                    int mods);
-    static void scrollCallback(GLFWwindow *window, double xOffset,
-                               double yOffset);
-    static void keyCallback(GLFWwindow *window, int key, int scanCode,
-                            int action, int mods);
 
   public:
     App();

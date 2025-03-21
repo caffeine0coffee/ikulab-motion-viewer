@@ -169,20 +169,16 @@ void App::setShapes(const char *filePath) {
 
 void App::initContexts() {
     camera = std::make_shared<Camera>();
-    keyboard = std::make_shared<Keyboard>();
-    mouse = std::make_shared<Mouse>();
     ui = std::make_shared<UI>();
 
     camera->ResetPosition();
 }
 
 void App::setGlfwWindowEvents(GLFWwindow *window) {
-    glfwSetWindowUserPointer(window, this);
-
-    glfwSetCursorPosCallback(window, cursorPositionCallback);
-    glfwSetMouseButtonCallback(window, mouseButtonCallback);
-    glfwSetScrollCallback(window, scrollCallback);
-    glfwSetKeyCallback(window, keyCallback);
+    glfwSetCursorPosCallback(window, input_state_->cursorPositionCallback);
+    glfwSetMouseButtonCallback(window, input_state_->mouseButtonCallback);
+    glfwSetScrollCallback(window, input_state_->scrollCallback);
+    glfwSetKeyCallback(window, input_state_->keyCallback);
 }
 
 void App::selectFileAndInitShapes() {
@@ -271,14 +267,17 @@ void App::run() {
     while (!appEngine->shouldTerminated()) {
         appEngine->vSync();
 
+        const auto input_state = InputState::GetInstance();
         camera->UpdateCamera(
-            mouse, keyboard,
+            input_state->mouse(),
+            input_state->keyboard(),
             std::any_of(mainWindow->getVirtualWindows().begin(),
                         mainWindow->getVirtualWindows().end(),
                         [](const std::shared_ptr<ikura::VirtualWindow> window) {
                             return window->isFocused();
                         }));
-        mouse->reset();
+
+        input_state->mouse()->Reset();
 
         updateMatrices();
         updateUI();

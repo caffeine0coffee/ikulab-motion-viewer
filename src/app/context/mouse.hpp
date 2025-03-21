@@ -1,24 +1,49 @@
 #pragma once
 
+#include <atomic>
+
 class Mouse {
   public:
-    bool leftButton = false;
-    bool rightButton = false;
-    bool middleButton = false;
+    void Reset();
 
-    double dragStartX = 0.0;
-    double dragStartY = 0.0;
-    double dragEndX = 0.0;
-    double dragEndY = 0.0;
+    void UpdateFromCursorPositionCallback(double x_pos, double y_pos);
+    void UpdateFromMouseButtonCallback(int button, int action, int mods);
+    void UpdateFromScrollCallback(double x_offset, double y_offset);
 
-    double currentX = 0.0;
-    double currentY = 0.0;
+    [[nodiscard]] bool left_button() const { return left_button_; }
+    [[nodiscard]] bool right_button() const { return right_button_; }
+    [[nodiscard]] bool middle_button() const { return middle_button_; }
 
-    double deltaX = 0.0;
-    double deltaY = 0.0;
+    [[nodiscard]] double drag_start_x() const { return drag_start_x_; }
+    [[nodiscard]] double drag_start_y() const { return drag_start_y_; }
 
-    double scrollOffsetX = 0.0;
-    double scrollOffsetY = 0.0;
+    [[nodiscard]] double current_x() const { return current_x_; }
+    [[nodiscard]] double current_y() const { return current_y_; }
 
-    void reset();
+    [[nodiscard]] double delta_x() const { return delta_x_; }
+    [[nodiscard]] double delta_y() const { return delta_y_; }
+
+    [[nodiscard]] double scroll_offset_x() const { return scroll_offset_x_; }
+    [[nodiscard]] double scroll_offset_y() const { return scroll_offset_y_; }
+
+  private:
+    void InitDragPosition();
+
+    std::atomic<bool> left_button_ = false;
+    std::atomic<bool> right_button_ = false;
+    std::atomic<bool> middle_button_ = false;
+
+    std::atomic<double> drag_start_x_ = 0.0;
+    std::atomic<double> drag_start_y_ = 0.0;
+    std::atomic<double> drag_end_x_ = 0.0;
+    std::atomic<double> drag_end_y_ = 0.0;
+
+    std::atomic<double> current_x_ = 0.0;
+    std::atomic<double> current_y_ = 0.0;
+
+    std::atomic<double> delta_x_ = 0.0;
+    std::atomic<double> delta_y_ = 0.0;
+
+    std::atomic<double> scroll_offset_x_ = 0.0;
+    std::atomic<double> scroll_offset_y_ = 0.0;
 };
