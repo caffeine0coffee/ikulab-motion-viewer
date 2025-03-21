@@ -442,6 +442,7 @@ void App::updateDebugWindow() {
     UI::makePadding(10);
 
     // mouse input status
+    const auto mouse = InputState::GetInstance()->mouse();
     ImGui::Text("Cursor Pos: (%.1f, %.1f)", mouse->current_x(), mouse->current_y());
     ImGui::Text("DragStart: (%.1f, %.1f)", mouse->drag_start_x(),
                 mouse->drag_start_y());

@@ -267,14 +267,17 @@ void App::run() {
     while (!appEngine->shouldTerminated()) {
         appEngine->vSync();
 
+        const auto input_state = InputState::GetInstance();
         camera->UpdateCamera(
-            mouse, keyboard,
+            input_state->mouse(),
+            input_state->keyboard(),
             std::any_of(mainWindow->getVirtualWindows().begin(),
                         mainWindow->getVirtualWindows().end(),
                         [](const std::shared_ptr<ikura::VirtualWindow> window) {
                             return window->isFocused();
                         }));
-        mouse->Reset();
+
+        input_state->mouse()->Reset();
 
         updateMatrices();
         updateUI();

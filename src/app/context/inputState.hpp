@@ -14,8 +14,12 @@ class InputState {
 
     static std::shared_ptr<InputState> GetInstance();
 
-    [[nodiscard]] const std::shared_ptr<Keyboard> keyboard() const;
-    [[nodiscard]] const std::shared_ptr<Mouse> mouse() const;
+    [[nodiscard]] const std::shared_ptr<Keyboard> keyboard() const {
+        return keyboard_;
+    }
+    [[nodiscard]] const std::shared_ptr<Mouse> mouse() const {
+        return mouse_;
+    }
 
     static void cursorPositionCallback(GLFWwindow* window, double xPos,
                                        double yPos);
