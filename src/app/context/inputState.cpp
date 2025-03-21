@@ -3,6 +3,10 @@
 //
 
 #include "InputState.hpp"
+InputState::InputState()
+    : keyboard_(std::make_shared<Keyboard>()),
+      mouse_(std::make_shared<Mouse>()) {}
+
 
 void InputState::cursorPositionCallback(GLFWwindow* window, double xPos,
                                         double yPos) {

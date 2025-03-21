@@ -22,6 +22,9 @@ class InputState {
                             int action, int mods);
 
   private:
+    static std::shared_ptr<InputState> instance_;
+    static std::mutex instance_mutex_;
+
     std::shared_ptr<Keyboard> keyboard_;
     std::shared_ptr<Mouse> mouse_;
 };
