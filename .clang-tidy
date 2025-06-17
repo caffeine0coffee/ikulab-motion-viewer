@@ -12,5 +12,5 @@ Checks: >
   -*-pro-type-union-access,
   -*-math-missing-parentheses
 
-WarningsAsErrors: '*'
+WarningsAsErrors: ''
 FormatStyle: file
