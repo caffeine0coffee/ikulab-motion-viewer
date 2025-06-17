@@ -12,7 +12,7 @@
 vcpkg_installed
 
 .ccls-cache
-imgui.ini
+*.ini
 myeasylog.log
 .vscode
 .nvim
